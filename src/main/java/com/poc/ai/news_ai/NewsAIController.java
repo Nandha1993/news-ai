@@ -9,11 +9,15 @@ import org.springframework.web.bind.annotation.RestController;
 @RestController
 public class NewsAIController {
 
-    @Autowired(required=true)
+    @Autowired
     ChatClient chatClient;
 
     @GetMapping("/prompt")
-    public ChatClient.ChatClientRequestSpec prompt(@RequestParam String message) {
-        return chatClient.prompt(message);
+    String generation(@RequestParam String userInput) {
+        return this.chatClient.prompt()
+                .user(userInput)
+                .call()
+                .content();
     }
+
 }
